@@ -79,6 +79,9 @@ namespace MessagePack
 			DeserializeTable [0xc0] = DeserializeNull;
 			DeserializeTable [0xc2] = DeserializeFalse;
 			DeserializeTable [0xc3] = DeserializeTrue;
+			DeserializeTable [0xc4] = DeserializeBin8;
+			DeserializeTable [0xc5] = DeserializeBin16;
+			DeserializeTable [0xc6] = DeserializeBin32;
 		}
 		#endregion
 
@@ -186,6 +189,37 @@ namespace MessagePack
 			int len = reader.ReadByte ();
 			return reader.ReadBytes (len);
 		}
+
+		private static void JumpBin8 (byte format, BinaryReader reader) {
+			int len = reader.ReadByte ();
+			reader.BaseStream.Seek (len, SeekOrigin.Current);
+		}
+
+
+		// 0xc5
+		private static object DeserializeBin16 (byte format, BinaryReader reader) {
+			int len = reader.ReadUInt16 ();
+			return reader.ReadBytes (len);
+		}
+
+		private static void JumpBin16 (byte format, BinaryReader reader) {
+			int len = reader.ReadUInt16 ();
+			reader.BaseStream.Seek (len, SeekOrigin.Current);
+		}
+
+
+		// 0xc6
+		private static object DeserializeBin32 (byte format, BinaryReader reader) {
+			int len = reader.ReadInt32 ();
+			return reader.ReadBytes (len);
+		}
+
+		private static void JumpBin32 (byte format, BinaryReader reader) {
+			int len = reader.ReadInt32 ();
+			reader.BaseStream.Seek (len, SeekOrigin.Current);
+		}
+
+
 		#endregion
 
 
