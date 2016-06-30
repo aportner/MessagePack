@@ -88,8 +88,11 @@ namespace MessagePack
 
 			// bytes
 			DeserializeTable [0xc4] = DeserializeBin8;
+			JumpTable [0xc4] = JumpBin8;
 			DeserializeTable [0xc5] = DeserializeBin16;
+			JumpTable [0xc5] = JumpBin16;
 			DeserializeTable [0xc6] = DeserializeBin32;
+			JumpTable [0xc6] = JumpBin32;
 
 			// c7-c9 ext
 
