@@ -62,26 +62,30 @@ namespace MessagePack
 			for (i = 0; i < 256; ++i)
 				JumpTable [i] = JumpEmpty;
 
+			// positive fixed int
 			for (i = 0; i < 0x80; ++i) {
 				DeserializeTable [i] = DeserializePositiveFixInt;
 			}
 
+			// fixed map
 			for (i = 0x80; i < 0x90; ++i) {
 				DeserializeTable [i] = DeserializeFixMap;
 				JumpTable [i] = JumpFixMap;
 			}
 
+			// fixed array
 			for (i = 0x90; i < 0xa0; ++i) {
 				DeserializeTable [i] = DeserializeFixArray;
 				JumpTable [i] = JumpFixArray;
 			}
 
+			// fixed string
 			for (i = 0xa0; i < 0xc0; ++i) {
 				DeserializeTable [i] = DeserializeFixString;
 				JumpTable [i] = JumpFixString;
 			}
 
-			// primitives
+			// primitive values
 			DeserializeTable [0xc0] = DeserializeNull;
 			DeserializeTable [0xc2] = DeserializeFalse;
 			DeserializeTable [0xc3] = DeserializeTrue;
@@ -124,7 +128,6 @@ namespace MessagePack
 
 			// d4 - d8 ext
 
-
 			// d9 - db string
 			DeserializeTable [0xd9] = DeserializeString8;
 			JumpTable [0xd9] = JumpLen8;
@@ -145,6 +148,7 @@ namespace MessagePack
 			DeserializeTable [0xdf] = DeserializeMap32;
 			JumpTable [0xdf] = JumpLen32;
 
+			// negative fixed int
 			for (i = 0xe0; i < 0x100; ++i) {
 				DeserializeTable [i] = DeserializeNegativeFixInt;
 			}
