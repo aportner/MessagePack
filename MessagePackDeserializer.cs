@@ -9,7 +9,7 @@ namespace MessagePack
 	/// <summary>
 	/// Class to handle the messagepack serialization protocol
 	/// </summary>
-	public class MessagePack
+	public static class MessagePackDeserializer
 	{
 		#region Delegates
 
@@ -54,7 +54,7 @@ namespace MessagePack
 		/// <summary>
 		/// Static initializer. Initializes all tables.
 		/// </summary>
-		static MessagePack ()
+		static MessagePackDeserializer ()
 		{
 			int i;
 
